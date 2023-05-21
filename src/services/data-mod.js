@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { irishCounties } from "../stores";
+import { irishCounties, costType } from "../stores";
 import { camperpinsService } from "./camperpins-service";
 
 export const dataMod = {
@@ -12,6 +12,14 @@ export const dataMod = {
     
   filterCounties(array) {
     return array.filter(item => irishCounties.includes(item));
+  },
+
+  removeCounties(array) {
+    return array.filter(item => !irishCounties.includes(item));
+  },
+
+  removeCost(array) {
+    return array.filter(item => !costType.includes(item));
   },
 
   stripCategoryName(array) {

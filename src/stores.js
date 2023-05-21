@@ -15,6 +15,8 @@ export const lastPin = writable({
   long: 0, 
 });
 
+export const costType = ['Free', 'Paid'];
+
 export const irishCounties = (
   [
     'Antrim',
