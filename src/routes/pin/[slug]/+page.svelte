@@ -7,9 +7,14 @@
   import MainNavigator from "$lib/MainNavigator.svelte";
   import TitleBar from '$lib/TitleBar.svelte';
   import DisplayImage from '$lib/DisplayImage.svelte';
+  import { camperpinsService } from '../../../services/camperpins-service';
+  import { dataMod } from '../../../services/data-mod';
+
   /** @type {import('./$types').PageData} */
   export let data;
   const { pin } = data
+
+  const pinCategories = 
 </script>
 
 <div class="columns is-vcentered">

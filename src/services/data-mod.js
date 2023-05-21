@@ -30,8 +30,8 @@ export const dataMod = {
     return array.map(obj => obj.category);
   },
 
-  getPinsWithCategory(category) {
-  
+  filterCategoriesForPin(pinId, array) {
+    return array.filter(item => item._id.includes(pinId))
   }
 
 };
