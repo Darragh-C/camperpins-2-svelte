@@ -4,8 +4,8 @@
 
   export let chartTitle = "";
   export let chartType = "";
-  export let distinctCat = [];
-  export let allCategories = [];
+  export let chartLabels = [];
+  export let chartDatapoints = [];
   
   let data = {
       labels: [],
@@ -25,16 +25,16 @@
   });
 
   function updateData() {
-    data.labels = [...distinctCat];
-    data.datasets[0].values = valuesArray(data.labels, allCategories);
+    data.labels = [...chartLabels];
+    data.datasets[0].values = valuesArray(data.labels, chartDatapoints);
   }
 
-  function valuesArray(distinctArray, allArray) {
+  function valuesArray(labelArray, dataPointsArray) {
     let valueArray = [];
-    for (let i = 0; i < distinctArray.length; i++) {
+    for (let i = 0; i < labelArray.length; i++) {
       let count = 0;
-      for (let j = 0; j < allArray.length; j++) {
-        if (allArray[j] == distinctArray[i]) {
+      for (let j = 0; j < dataPointsArray.length; j++) {
+        if (dataPointsArray[j] == labelArray[i]) {
           count++;
         }
       }

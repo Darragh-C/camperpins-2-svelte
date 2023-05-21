@@ -1,5 +1,4 @@
 <script>
-  import Chart from "svelte-frappe-charts";
   import { camperpinsService } from "../services/camperpins-service";
   import { dataMod } from "../services/data-mod";
   import { onMount } from "svelte";
@@ -17,4 +16,4 @@
 
 </script>
 
-<ChartTemplate chartTitle="Camping spots" chartType="donut" distinctCat={distinctCategories} allCategories={campType} />
+<ChartTemplate chartTitle="Camping spots" chartType="donut" chartLabels={distinctCategories} chartDatapoints={campType} />

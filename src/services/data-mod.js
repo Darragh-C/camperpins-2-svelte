@@ -14,6 +14,10 @@ export const dataMod = {
     return array.filter(item => irishCounties.includes(item));
   },
 
+  filterCost(array) {
+    return array.filter(item => costType.includes(item));
+  },
+
   removeCounties(array) {
     return array.filter(item => !irishCounties.includes(item));
   },
