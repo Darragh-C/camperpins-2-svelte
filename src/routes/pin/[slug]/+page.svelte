@@ -6,10 +6,36 @@
   import PinDesc from '$lib/PinDesc.svelte';
   import MainNavigator from "$lib/MainNavigator.svelte";
   import TitleBar from '$lib/TitleBar.svelte';
+  import AddCategory from '$lib/AddCategory.svelte';
   import DisplayImage from '$lib/DisplayImage.svelte';
+  import { camperpinsService } from '../../../services/camperpins-service';
+  import { dataMod } from '../../../services/data-mod';
+  import DisplayCategories from '$lib/DisplayCategories.svelte';
+  import { onMount } from "svelte";
+  import { setContext } from 'svelte';
+
   /** @type {import('./$types').PageData} */
   export let data;
   const { pin } = data
+
+  let currentPinCategories = [];
+  /*
+  const currentPinCategories = dataMod.filterCategoriesForPin(pin._id, async () => {
+    return await camperpinsService.getCategories();
+  })
+  */
+  onMount (getPinCategories);
+
+  async function getPinCategories() {
+    const allCategories = await camperpinsService.getCategories();
+    currentPinCategories = dataMod.filterCategoriesForPin(pin._id, allCategories);
+    console.log(currentPinCategories);
+  }
+
+  function updateArray(newArray) {
+    currentPinCategories = newArray;
+  }
+
 </script>
 
 <div class="columns is-vcentered">
@@ -30,19 +56,22 @@
           {:else}   
             <AddPinTitle pinId={pin._id} />
           {/if}
+          {#if currentPinCategories}
+            <DisplayCategories pinCategories={currentPinCategories} />
+          {/if}
           {#if pin.description}
             <PinDesc description={pin.description} />
           {:else}   
             <AddPinDesc pinId={pin._id} />
           {/if}
+
         </div>
         <div class="column is-one-third">
           <PinCoordinates lat={pin.lattitude} long={pin.longitude} />
+          <AddCategory pinId={pin._id} {currentPinCategories} {updateArray} />
           {#if pin.img}
             <DisplayImage image={pin.img} name={pin.name} />
           {/if}
         </div>
     </div>   
 </div>
-
-

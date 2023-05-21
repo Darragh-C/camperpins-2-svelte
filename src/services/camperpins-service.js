@@ -76,17 +76,6 @@ export const camperpinsService = {
             const response = await axios.get(this.baseUrl + "/api/pins/" + pin);
             console.log(response);
             return response.data;
-            /*
-            const serializedPin = {
-                "_id": response._id.toString(),
-                "name": response.data.name,
-                "description": response.data.description,
-                "lattitude": response.data.lattitude,
-                "longitude": response.data.longitude,
-                "userid": response.data.userid.toString()
-            };
-            return serializedPin;
-            */
         } catch (error) {
             return error;
         }
@@ -161,6 +150,17 @@ export const camperpinsService = {
             return response.data;
         } catch (error) {
             return error;
+        }
+    },
+
+    async addCategory(pinId, categoryObj) {
+        console.log("adding category");
+        try {
+            const response = await axios.post(this.baseUrl + "/api/pins/" + pinId + "/categories", categoryObj);
+            console.log(response.status);
+            return response.data;
+        } catch (error) {
+            return false;
         }
     },
 
