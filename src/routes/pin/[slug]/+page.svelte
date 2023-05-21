@@ -12,6 +12,7 @@
   import { dataMod } from '../../../services/data-mod';
   import DisplayCategories from '$lib/DisplayCategories.svelte';
   import { onMount } from "svelte";
+  import { setContext } from 'svelte';
 
   /** @type {import('./$types').PageData} */
   export let data;
@@ -29,6 +30,10 @@
     const allCategories = await camperpinsService.getCategories();
     currentPinCategories = dataMod.filterCategoriesForPin(pin._id, allCategories);
     console.log(currentPinCategories);
+  }
+
+  function updateArray(newArray) {
+    currentPinCategories = newArray;
   }
 
 </script>
@@ -63,12 +68,10 @@
         </div>
         <div class="column is-one-third">
           <PinCoordinates lat={pin.lattitude} long={pin.longitude} />
-          <AddCategory pinId={pin._id} />
+          <AddCategory pinId={pin._id} {currentPinCategories} {updateArray} />
           {#if pin.img}
             <DisplayImage image={pin.img} name={pin.name} />
           {/if}
         </div>
     </div>   
 </div>
-
-

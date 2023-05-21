@@ -1,5 +1,7 @@
 <script>
-  export let pinCategories = [];
+  import { latestCategory } from '../stores';
+  export let pinCategories;
+
 </script>
 
 <div class="tags are-medium">
