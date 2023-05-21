@@ -2,7 +2,7 @@
   import TitleBar from "$lib/TitleBar.svelte";
   import MainNavigator from "$lib/MainNavigator.svelte";
   import PinsByCounty from "$lib/PinsByCounty.svelte";
-  import DonutChart from "$lib/DonutChart.svelte";
+  import CampSpotChart from "$lib/CampSpotChart.svelte";
   import FreePaidChart from "$lib/FreePaidChart.svelte";
   import van2 from "/src/assets/epic-van.jpg"
 </script>
@@ -25,5 +25,5 @@
   </div>
 </div>
 <div class="column has-text-centered">
-  <DonutChart />
+  <CampSpotChart />
 </div>
