@@ -6,12 +6,15 @@
   import { user, latestLatLong, lastPin } from "../stores.js";
   import { onDestroy } from "svelte";
   import { goto } from "$app/navigation";
-
+  import * as L from "leaflet";
   
+  let testLG = "";
+
   const mapConfig = {
     location: { lat: 52.160858, lng: -7.15242 },
     zoom: 8,
-    minZoom: 1
+    minZoom: 1,
+    layers: testLG,
   };
 
   const userEmail = $user.email;
@@ -61,6 +64,8 @@
     const map = new LeafletMap("pin-map", mapConfig);
     map.showZoomControl();
     map.showLayerControl();
+
+    let TestLayerGroup = map.addLayerGroup("TestLayerGroup");
     
     const newMarker = await map.onClickAddMarker();
     if (newMarker) {
@@ -70,6 +75,18 @@
     pins.forEach((pin) => {
       addPinMarker(map, pin);
     });
+    
+    map.showLayerControl();
+    /*
+    testGroup = L.layerGroup([]);
+    
+    const testPins = pins.slice(0,4);
+    testLG = L.layerGroup(testPins);
+    const overlayMaps = {
+      "testLG": testLG
+    };
+    const layerControl = L.control.layers(overlayMaps).addTo(map);
+    */
   });
 
   function addPinMarker(map, pin) {
@@ -79,7 +96,7 @@
     } else {
       markerString = `<a href="/pin/${pin._id}">Add pin information</a>`;
     } 
-    map.addMarker({ lat: pin.lattitude, lng: pin.longitude }, markerString);
+    map.addMarker({ lat: pin.lattitude, lng: pin.longitude }, markerString, "TestLayerGroup");
   }
 </script>
 
