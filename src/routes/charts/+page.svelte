@@ -24,6 +24,11 @@
     <FreePaidChart />
   </div>
 </div>
-<div class="column has-text-centered">
-  <CampSpotChart />
+<div class="columns">
+  <div class="column has-text-centered">
+    <CampSpotChart />
+  </div>
+  <div class="column has-text-centered">
+   
+  </div>
 </div>
