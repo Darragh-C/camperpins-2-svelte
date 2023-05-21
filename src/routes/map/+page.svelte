@@ -3,7 +3,6 @@
   import MainNavigator from "$lib/MainNavigator.svelte";
   import TitleBar from '$lib/TitleBar.svelte';
   import PinMap from "$lib/PinMap.svelte";
-  import MapFilter from "$lib/MapFilter.svelte";
   import { camperpinsService } from "../../services/camperpins-service";
 
 
@@ -17,5 +16,5 @@
     <MainNavigator/>
   </div>
 </div> 
-<MapFilter />
+
 <PinMap />
