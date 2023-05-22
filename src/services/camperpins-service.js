@@ -74,7 +74,7 @@ export const camperpinsService = {
         try {
             const token = user.token;
             const response = await axios.get(this.baseUrl + "/api/pins/" + pin);
-            console.log(response);
+            //console.log(response);
             return response.data;
         } catch (error) {
             return error;
@@ -157,7 +157,7 @@ export const camperpinsService = {
         console.log("adding category");
         try {
             const response = await axios.post(this.baseUrl + "/api/pins/" + pinId + "/categories", categoryObj);
-            console.log(response.status);
+            //console.log(response.status);
             return response.data;
         } catch (error) {
             return false;

@@ -3,18 +3,21 @@
   import { LeafletMap } from "../services/leaflet-map";
   import { onMount } from "svelte";
   import { camperpinsService } from "../services/camperpins-service";
+  import { dataMod } from "../services/data-mod";
   import { user, latestLatLong, lastPin } from "../stores.js";
   import { onDestroy } from "svelte";
   import { goto } from "$app/navigation";
   import * as L from "leaflet";
   
-  let layerGroupName = '';
+  //let layerGroupName = '';
+  let layerGroupNames = [];
+  let currentLayerGroup = '';
 
   const mapConfig = {
     location: { lat: 52.160858, lng: -7.15242 },
     zoom: 8,
     minZoom: 1,
-    layers: layerGroupName,
+    layers: layerGroupNames,
   };
 
   const userEmail = $user.email;
@@ -65,14 +68,33 @@
     map.showZoomControl();
     map.showLayerControl();
 
+    const allCategories = dataMod.stripCategoryName(await camperpinsService.getCategories());
+    layerGroupNames = dataMod.getDistinct(allCategories);
+    //console.log(this.mapConfig.layers);
+    const categoryObjs = await camperpinsService.getCategories();
+
+    for (let i = 0; i < layerGroupNames.length; i++) {
+      const layerGroupName = layerGroupNames[i];
+      currentLayerGroup = layerGroupName;
+      const layerGroup = map.addLayerGroup(layerGroupName);
+      const layerCategories = categoryObjs.filter(item => item.category == layerGroupName);
+      const layerPins = [];
+      for (let j = 0; j < layerCategories.length; j++) {
+        const pin = await camperpinsService.getPin(layerCategories[j].pinId);
+        layerPins.push(pin);
+      }
+      
+      layerPins.forEach((pin) => {
+        addPinMarker(map, pin);
+      });
+    }
+
+    /*
     layerGroupName = 'Free'
 
     let TestLayerGroup = map.addLayerGroup(layerGroupName);
     
-    const newMarker = await map.onClickAddMarker();
-    if (newMarker) {
-      console.log('new marker added');
-    }
+    
     const categories = await camperpinsService.getCategories();
     
     const freeCategories = categories.filter(item => item.category == layerGroupName);
@@ -86,7 +108,7 @@
     freePins.forEach((pin) => {
       addPinMarker(map, pin);
     });
-    
+    */
     map.showLayerControl();
     /*
     testGroup = L.layerGroup([]);
@@ -98,17 +120,22 @@
     };
     const layerControl = L.control.layers(overlayMaps).addTo(map);
     */
+
+    const newMarker = await map.onClickAddMarker();
+    if (newMarker) {
+      console.log('new marker added');
+    }
   });
 
   function addPinMarker(map, pin) {
-    let lgName = layerGroupName;
+    //let lgName = layerGroupName;
     let markerString = "";
     if (pin.name) {
       markerString = `<a href="/pin/${pin._id}">${pin.name}</a>`;
     } else {
       markerString = `<a href="/pin/${pin._id}">Add pin information</a>`;
     } 
-    map.addMarker({ lat: pin.lattitude, lng: pin.longitude }, markerString, layerGroupName);
+    map.addMarker({ lat: pin.lattitude, lng: pin.longitude }, markerString, currentLayerGroup);
   }
 </script>
 
