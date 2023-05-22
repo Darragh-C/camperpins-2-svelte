@@ -8,13 +8,13 @@
   import { goto } from "$app/navigation";
   import * as L from "leaflet";
   
-  let testLG = "";
+  let layerGroupName = '';
 
   const mapConfig = {
     location: { lat: 52.160858, lng: -7.15242 },
     zoom: 8,
     minZoom: 1,
-    layers: testLG,
+    layers: layerGroupName,
   };
 
   const userEmail = $user.email;
@@ -65,14 +65,25 @@
     map.showZoomControl();
     map.showLayerControl();
 
-    let TestLayerGroup = map.addLayerGroup("TestLayerGroup");
+    layerGroupName = 'Free'
+
+    let TestLayerGroup = map.addLayerGroup(layerGroupName);
     
     const newMarker = await map.onClickAddMarker();
     if (newMarker) {
       console.log('new marker added');
     }
-    const pins = await camperpinsService.getPins();
-    pins.forEach((pin) => {
+    const categories = await camperpinsService.getCategories();
+    
+    const freeCategories = categories.filter(item => item.category == layerGroupName);
+    console.log(freeCategories);
+    const freePins = [];
+    for (let i = 0; i < freeCategories.length; i++) {
+      const pin = await camperpinsService.getPin(freeCategories[i].pinId);
+      freePins.push(pin);
+    }
+    console.log(freePins);
+    freePins.forEach((pin) => {
       addPinMarker(map, pin);
     });
     
@@ -90,13 +101,14 @@
   });
 
   function addPinMarker(map, pin) {
+    let lgName = layerGroupName;
     let markerString = "";
     if (pin.name) {
       markerString = `<a href="/pin/${pin._id}">${pin.name}</a>`;
     } else {
       markerString = `<a href="/pin/${pin._id}">Add pin information</a>`;
     } 
-    map.addMarker({ lat: pin.lattitude, lng: pin.longitude }, markerString, "TestLayerGroup");
+    map.addMarker({ lat: pin.lattitude, lng: pin.longitude }, markerString, layerGroupName);
   }
 </script>
 
