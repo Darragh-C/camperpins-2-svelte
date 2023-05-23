@@ -164,4 +164,6 @@ export const camperpinsService = {
         }
     },
 
+    async uploadImage()
+
 };
