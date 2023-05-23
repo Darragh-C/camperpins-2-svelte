@@ -72,18 +72,16 @@
     layerGroupNames = dataMod.getDistinct(allCategories);
     //console.log(this.mapConfig.layers);
     const categoryObjs = await camperpinsService.getCategories();
+    const pinObjs = await camperpinsService.getPins();
 
     for (let i = 0; i < layerGroupNames.length; i++) {
       const layerGroupName = layerGroupNames[i];
       currentLayerGroup = layerGroupName;
       const layerGroup = map.addLayerGroup(layerGroupName);
       const layerCategories = categoryObjs.filter(item => item.category == layerGroupName);
-      const layerPins = [];
-      for (let j = 0; j < layerCategories.length; j++) {
-        const pin = await camperpinsService.getPin(layerCategories[j].pinId);
-        layerPins.push(pin);
-      }
-      
+      const layerPins = pinObjs.filter(pinObj => layerCategories.map(category => category.pinId).includes(pinObj._id));
+      console.log(layerGroupName);
+      console.log(`layerPins ${i}: ${layerPins.map(pin => pin.name)}`);
       layerPins.forEach((pin) => {
         addPinMarker(map, pin);
       });
