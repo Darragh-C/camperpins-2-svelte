@@ -3,19 +3,63 @@
   import { LeafletMap } from "../services/leaflet-map";
   import { onMount } from "svelte";
   import { camperpinsService } from "../services/camperpins-service";
+  import { dataMod } from "../services/data-mod";
   import { user, latestLatLong, lastPin } from "../stores.js";
   import { onDestroy } from "svelte";
   import { goto } from "$app/navigation";
-
+  import * as L from "leaflet";
   
+  //let layerGroupName = '';
+  let layerGroupNames = [];
+  let currentLayerGroup = '';
+
   const mapConfig = {
     location: { lat: 52.160858, lng: -7.15242 },
     zoom: 8,
-    minZoom: 1
+    minZoom: 1,
+    layers: layerGroupNames,
   };
 
   const userEmail = $user.email;
-  
+
+  onMount(async () => {
+    const map = new LeafletMap("pin-map", mapConfig);
+    map.showZoomControl();
+   
+    //populate layer groups
+    const allCategories = dataMod.stripCategoryName(await camperpinsService.getCategories());
+    layerGroupNames = dataMod.getDistinct(allCategories);
+    const categoryObjs = await camperpinsService.getCategories();
+    const pinObjs = await camperpinsService.getPins();
+
+    for (let i = 0; i < layerGroupNames.length; i++) {
+      const layerGroupName = layerGroupNames[i];
+      currentLayerGroup = layerGroupName;
+      const layerGroup = map.addLayerGroup(layerGroupName);
+      const layerCategories = categoryObjs.filter(item => item.category == layerGroupName);
+      const layerPins = pinObjs.filter(pinObj => layerCategories.map(category => category.pinId).includes(pinObj._id));
+      console.log(layerGroupName);
+      console.log(`layerPins ${i}: ${layerPins.map(pin => pin.name)}`);
+      layerPins.forEach((pin) => {
+        addPinMarker(map, pin);
+      });
+    }
+
+    map.showLayerControl();
+
+    const newMarker = await map.onClickAddMarker();
+  });
+
+
+  function addPinMarker(map, pin) {
+    let markerString = "";
+    if (pin.name) {
+      markerString = `<a href="/pin/${pin._id}">${pin.name}</a>`;
+    } else {
+      markerString = `<a href="/pin/${pin._id}">Add pin information</a>`;
+    } 
+    map.addMarker({ lat: pin.lattitude, lng: pin.longitude }, markerString, currentLayerGroup);
+  }
 
   async function addPin(markerPin) {
     console.log(`attemting to add pin`);
@@ -56,31 +100,6 @@
 
   onDestroy(unsub);
 
-
-  onMount(async () => {
-    const map = new LeafletMap("pin-map", mapConfig);
-    map.showZoomControl();
-    map.showLayerControl();
-    
-    const newMarker = await map.onClickAddMarker();
-    if (newMarker) {
-      console.log('new marker added');
-    }
-    const pins = await camperpinsService.getPins();
-    pins.forEach((pin) => {
-      addPinMarker(map, pin);
-    });
-  });
-
-  function addPinMarker(map, pin) {
-    let markerString = "";
-    if (pin.name) {
-      markerString = `<a href="/pin/${pin._id}">${pin.name}</a>`;
-    } else {
-      markerString = `<a href="/pin/${pin._id}">Add pin information</a>`;
-    } 
-    map.addMarker({ lat: pin.lattitude, lng: pin.longitude }, markerString);
-  }
 </script>
 
 <div class="box" id="pin-map" style="height:75vh" />
