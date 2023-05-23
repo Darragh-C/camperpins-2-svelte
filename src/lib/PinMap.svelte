@@ -21,7 +21,45 @@
   };
 
   const userEmail = $user.email;
-  
+
+  onMount(async () => {
+    const map = new LeafletMap("pin-map", mapConfig);
+    map.showZoomControl();
+   
+    //populate layer groups
+    const allCategories = dataMod.stripCategoryName(await camperpinsService.getCategories());
+    layerGroupNames = dataMod.getDistinct(allCategories);
+    const categoryObjs = await camperpinsService.getCategories();
+    const pinObjs = await camperpinsService.getPins();
+
+    for (let i = 0; i < layerGroupNames.length; i++) {
+      const layerGroupName = layerGroupNames[i];
+      currentLayerGroup = layerGroupName;
+      const layerGroup = map.addLayerGroup(layerGroupName);
+      const layerCategories = categoryObjs.filter(item => item.category == layerGroupName);
+      const layerPins = pinObjs.filter(pinObj => layerCategories.map(category => category.pinId).includes(pinObj._id));
+      console.log(layerGroupName);
+      console.log(`layerPins ${i}: ${layerPins.map(pin => pin.name)}`);
+      layerPins.forEach((pin) => {
+        addPinMarker(map, pin);
+      });
+    }
+
+    map.showLayerControl();
+
+    const newMarker = await map.onClickAddMarker();
+  });
+
+
+  function addPinMarker(map, pin) {
+    let markerString = "";
+    if (pin.name) {
+      markerString = `<a href="/pin/${pin._id}">${pin.name}</a>`;
+    } else {
+      markerString = `<a href="/pin/${pin._id}">Add pin information</a>`;
+    } 
+    map.addMarker({ lat: pin.lattitude, lng: pin.longitude }, markerString, currentLayerGroup);
+  }
 
   async function addPin(markerPin) {
     console.log(`attemting to add pin`);
@@ -62,79 +100,6 @@
 
   onDestroy(unsub);
 
-
-  onMount(async () => {
-    const map = new LeafletMap("pin-map", mapConfig);
-    map.showZoomControl();
-    map.showLayerControl();
-
-    const allCategories = dataMod.stripCategoryName(await camperpinsService.getCategories());
-    layerGroupNames = dataMod.getDistinct(allCategories);
-    //console.log(this.mapConfig.layers);
-    const categoryObjs = await camperpinsService.getCategories();
-    const pinObjs = await camperpinsService.getPins();
-
-    for (let i = 0; i < layerGroupNames.length; i++) {
-      const layerGroupName = layerGroupNames[i];
-      currentLayerGroup = layerGroupName;
-      const layerGroup = map.addLayerGroup(layerGroupName);
-      const layerCategories = categoryObjs.filter(item => item.category == layerGroupName);
-      const layerPins = pinObjs.filter(pinObj => layerCategories.map(category => category.pinId).includes(pinObj._id));
-      console.log(layerGroupName);
-      console.log(`layerPins ${i}: ${layerPins.map(pin => pin.name)}`);
-      layerPins.forEach((pin) => {
-        addPinMarker(map, pin);
-      });
-    }
-
-    /*
-    layerGroupName = 'Free'
-
-    let TestLayerGroup = map.addLayerGroup(layerGroupName);
-    
-    
-    const categories = await camperpinsService.getCategories();
-    
-    const freeCategories = categories.filter(item => item.category == layerGroupName);
-    console.log(freeCategories);
-    const freePins = [];
-    for (let i = 0; i < freeCategories.length; i++) {
-      const pin = await camperpinsService.getPin(freeCategories[i].pinId);
-      freePins.push(pin);
-    }
-    console.log(freePins);
-    freePins.forEach((pin) => {
-      addPinMarker(map, pin);
-    });
-    */
-    map.showLayerControl();
-    /*
-    testGroup = L.layerGroup([]);
-    
-    const testPins = pins.slice(0,4);
-    testLG = L.layerGroup(testPins);
-    const overlayMaps = {
-      "testLG": testLG
-    };
-    const layerControl = L.control.layers(overlayMaps).addTo(map);
-    */
-
-    const newMarker = await map.onClickAddMarker();
-    if (newMarker) {
-      console.log('new marker added');
-    }
-  });
-
-  function addPinMarker(map, pin) {
-    //let lgName = layerGroupName;
-    let markerString = "";
-    if (pin.name) {
-      markerString = `<a href="/pin/${pin._id}">${pin.name}</a>`;
-    } else {
-      markerString = `<a href="/pin/${pin._id}">Add pin information</a>`;
-    } 
-    map.addMarker({ lat: pin.lattitude, lng: pin.longitude }, markerString, currentLayerGroup);
-  }
 </script>
 
 <div class="box" id="pin-map" style="height:75vh" />
