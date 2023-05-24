@@ -70,7 +70,7 @@
         <div class="column is-one-third">
           <PinCoordinates lat={pin.lattitude} long={pin.longitude} />
           <AddCategory pinId={pin._id} {currentPinCategories} {updateArray} />
-          <ImageUpload pinId={pin._id} />
+          <ImageUpload pin={pin} />
           <!--
             {#if pin.img}
               <DisplayImage image={pin.img} name={pin.name} />

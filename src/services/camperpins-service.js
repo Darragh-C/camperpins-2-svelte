@@ -4,7 +4,7 @@ import axios from "axios";
 import { user } from "../stores";
 
 export const camperpinsService = {
-    baseUrl: "http://localhost:9122",
+    baseUrl: "http://localhost:9123",
 
     async login(email, password) {
         try {
@@ -164,6 +164,18 @@ export const camperpinsService = {
         }
     },
 
-    async uploadImage()
+    async uploadImage(pinId, formData) {
+        try {
+            const response = await axios.post(this.baseUrl + "/api/pins/" + pinId + "/uploadimage", formData);
+            console.log(response.status);
+            console.log(response);
+            return response.data;
+        } catch (error) {
+            console.log(error); 
+            return false;
+        }
+    },
+    
+    
 
 };
