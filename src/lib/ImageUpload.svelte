@@ -4,6 +4,7 @@
 export let pin = {}; 
 let fileName = '';
 let fileInput; 
+let imageUrl = ''; 
 
 const handleFileChange = (event) => {
   const files = event.target.files;
@@ -16,19 +17,19 @@ async function uploadImage () {
   const formData = new FormData();
   formData.append('imagefile', fileInput.files[0]);
   console.log(formData);
-  await camperpinsService.uploadImage(pin._id, formData);
+  imageUrl = await camperpinsService.uploadImage(pin._id, formData);
 }
 </script>
 
-{#if pin.img}
+
 <div class="card">
   <div class="card-image">
     <figure class="image is-256x256">
-      <img src={pin.img}>
+      <img src={imageUrl}>
     </figure>
   </div>
 </div>
-{/if}
+
 
 <div class="card-content">
 <form on:submit|preventDefault={uploadImage}>
