@@ -1,10 +1,12 @@
 <script>
   import { camperpinsService } from "../services/camperpins-service";
+    import DeleteImage from "./DeleteImage.svelte";
+  import DisplayImage from "./DisplayImage.svelte";
 
 export let pin = {}; 
 let fileName = '';
 let fileInput; 
-let imageUrl = ''; 
+let imageUrl = pin.img; 
 
 const handleFileChange = (event) => {
   const files = event.target.files;
@@ -21,11 +23,15 @@ async function uploadImage () {
 }
 </script>
 
+{#if imageUrl || pin.img}
+  <DeleteImage pinId={pin._id}/>
+{/if}
+
 
 <div class="card">
   <div class="card-image">
     <figure class="image is-256x256">
-      <img src={imageUrl}>
+        <img src={imageUrl}>
     </figure>
   </div>
 </div>
