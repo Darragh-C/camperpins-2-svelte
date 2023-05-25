@@ -4,7 +4,7 @@ import axios from "axios";
 import { user } from "../stores";
 
 export const camperpinsService = {
-    baseUrl: "http://localhost:9122",
+    baseUrl: "http://localhost:9128",
 
     async login(email, password) {
         try {
@@ -161,6 +161,45 @@ export const camperpinsService = {
             return response.data;
         } catch (error) {
             return false;
+        }
+    },
+
+    async uploadImage(pinId, formData) {
+        try {
+            const response = await axios.post(this.baseUrl + "/api/pins/" + pinId + "/uploadimage", formData);
+            console.log(response.status);
+            console.log(response);
+            return response.data;
+        } catch (error) {
+            console.log(error); 
+            return false;
+        }
+    },
+    
+    async removeImage(pinId) {
+        console.log("removing pin image");
+        try {
+
+            let token;
+
+            console.log("adding token");
+    
+            if (localStorage.camperpins) {
+                token = JSON.parse(localStorage.camperpins).token;
+            } else {
+                token = user.token;
+            }
+
+            const response = await axios.put(this.baseUrl + "/api/pins/" + pinId + "/removeimage", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            console.log(`response: ${response}`);
+            console.log(`response status: ${response.status}`);
+            return true;
+        } catch (error) {
+            return error;
         }
     },
 

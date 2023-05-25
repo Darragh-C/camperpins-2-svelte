@@ -7,6 +7,8 @@
   import MainNavigator from "$lib/MainNavigator.svelte";
   import TitleBar from '$lib/TitleBar.svelte';
   import AddCategory from '$lib/AddCategory.svelte';
+  import DeleteImage from '$lib/DeleteImage.svelte';
+  import ImageUpload from '$lib/ImageUpload.svelte';
   import DisplayImage from '$lib/DisplayImage.svelte';
   import { camperpinsService } from '../../../services/camperpins-service';
   import { dataMod } from '../../../services/data-mod';
@@ -69,9 +71,9 @@
         <div class="column is-one-third">
           <PinCoordinates lat={pin.lattitude} long={pin.longitude} />
           <AddCategory pinId={pin._id} {currentPinCategories} {updateArray} />
-          {#if pin.img}
-            <DisplayImage image={pin.img} name={pin.name} />
-          {/if}
+          
+          <ImageUpload pin={pin} />
+          
         </div>
     </div>   
 </div>

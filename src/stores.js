@@ -19,6 +19,8 @@ export const latestCategory = writable({});
 
 export const costType = ['Free', 'Paid'];
 
+export const imageUrl = writable('');
+
 export const irishCounties = (
   [
     'Antrim',
