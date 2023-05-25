@@ -197,7 +197,7 @@ export const camperpinsService = {
             });
             console.log(`response: ${response}`);
             console.log(`response status: ${response.status}`);
-            return response.data;
+            return true;
         } catch (error) {
             return error;
         }

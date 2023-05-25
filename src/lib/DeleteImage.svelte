@@ -1,13 +1,19 @@
 <script>
   import { camperpinsService } from "../services/camperpins-service";
+  import { createEventDispatcher } from 'svelte';
+  
+  const dispatch = createEventDispatcher();
 
   export let pinId = "";
 
   async function deleteImage() {
-    await camperpinsService.removeImage(pinId);
-   
+    const success = await camperpinsService.removeImage(pinId);
+    if (success) {
+      dispatch('deleted');
+      console.log('image deleted!')
+    }
   }
 </script>
 
 
-<button on:click|preventDefault={deleteImage}>Delete Image</button>
+<button on:click={deleteImage}>Delete Image</button>

@@ -1,7 +1,8 @@
 <script>
   import { camperpinsService } from "../services/camperpins-service";
-    import DeleteImage from "./DeleteImage.svelte";
+  import DeleteImage from "./DeleteImage.svelte";
   import DisplayImage from "./DisplayImage.svelte";
+  
 
 export let pin = {}; 
 let fileName = '';
@@ -21,10 +22,14 @@ async function uploadImage () {
   console.log(formData);
   imageUrl = await camperpinsService.uploadImage(pin._id, formData);
 }
+
+function clearImageUrl() {
+  imageUrl = "";
+}
 </script>
 
 {#if imageUrl || pin.img}
-  <DeleteImage pinId={pin._id}/>
+  <DeleteImage pinId={pin._id} on:deleted={clearImageUrl} />
 {/if}
 
 
