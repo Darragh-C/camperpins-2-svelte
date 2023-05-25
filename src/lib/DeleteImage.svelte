@@ -4,12 +4,10 @@
   export let pinId = "";
 
   async function deleteImage() {
-    await camperpinsService.updatePin(pinId, {
-      "img": "",
-    });
+    await camperpinsService.removeImage(pinId);
    
   }
 </script>
 
 
-<button on:click="{deleteImage}">Delete Image</button>
+<button on:click|preventDefault={deleteImage}>Delete Image</button>
