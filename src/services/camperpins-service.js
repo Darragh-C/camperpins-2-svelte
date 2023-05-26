@@ -4,7 +4,7 @@ import axios from "axios";
 import { user } from "../stores";
 
 export const camperpinsService = {
-    baseUrl: "http://localhost:9128",
+    baseUrl: "https://camperpins-2.onrender.com/",
 
     async login(email, password) {
         try {
