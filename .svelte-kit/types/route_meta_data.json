@@ -1,0 +1,15 @@
+{
+	"/": [],
+	"/charts": [],
+	"/dashboard": [],
+	"/login": [],
+	"/logout": [],
+	"/map": [
+		"src/routes/map/+page.ts"
+	],
+	"/pin/[slug]": [
+		"src/routes/pin/[slug]/+page.server.js"
+	],
+	"/signup": [],
+	"/test": []
+}
