@@ -7,7 +7,7 @@
   import { user, latestLatLong, lastPin } from "../stores.js";
   import { onDestroy } from "svelte";
   import { goto } from "$app/navigation";
-  import * as L from "leaflet";
+  //import * as L from "leaflet";
   
   //let layerGroupName = '';
   let layerGroupNames = [];
