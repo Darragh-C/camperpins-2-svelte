@@ -1,5 +1,5 @@
 <script>
-  import camperpinsLogo from "/src/assets/camper-pins-logo.png"
+  import camperpinsLogo from "/src/static/camper-pins-logo.png"
   import Header from '$lib/Header.svelte';
   import WelcomeNavigator from '$lib/WelcomeNavigator.svelte';
 </script>
