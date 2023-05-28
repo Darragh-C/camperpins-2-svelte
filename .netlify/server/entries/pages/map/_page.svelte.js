@@ -5,7 +5,6 @@ import "leaflet";
 import { u as user, l as latestLatLong, a as lastPin } from "../../../chunks/stores.js";
 import { c as camperpinsService } from "../../../chunks/camperpins-service.js";
 import { g as goto } from "../../../chunks/navigation.js";
-const leaflet = "";
 const PinMap = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $user, $$unsubscribe_user;
   $$unsubscribe_user = subscribe(user, (value) => $user = value);

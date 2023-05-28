@@ -1,5 +1,5 @@
 <script>
-  import "../static/leaflet.css";
+  //import "../static/leaflet.css";
   import { LeafletMap } from "../services/leaflet-map";
   import { onMount } from "svelte";
   import { camperpinsService } from "../services/camperpins-service";
