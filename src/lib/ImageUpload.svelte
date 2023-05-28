@@ -36,7 +36,9 @@ function clearImageUrl() {
 <div class="card">
   <div class="card-image">
     <figure class="image is-256x256">
-        <img alt="pin" src={imageUrl}>
+      {#if imageUrl}
+        <img alt={`Image of ${pin.name}`} src={imageUrl}>
+      {/if}
     </figure>
   </div>
 </div>

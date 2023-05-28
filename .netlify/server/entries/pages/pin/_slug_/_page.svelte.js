@@ -93,7 +93,7 @@ const ImageUpload = create_ssr_component(($$result, $$props, $$bindings, slots) 
   return `${imageUrl || pin.img ? `${validate_component(DeleteImage, "DeleteImage").$$render($$result, { pinId: pin._id }, {}, {})}` : ``}
 
 
-<div class="card"><div class="card-image"><figure class="image is-256x256"><img alt="pin"${add_attribute("src", imageUrl, 0)}></figure></div></div>
+<div class="card"><div class="card-image"><figure class="image is-256x256">${imageUrl ? `<img${add_attribute("alt", `Image of ${pin.name}`, 0)}${add_attribute("src", imageUrl, 0)}>` : ``}</figure></div></div>
 
 
 <div class="card-content"><form><div id="file-select" class="file has-name is-fullwidth"><label class="file-label"><input class="file-input" name="imagefile" type="file" accept="image/png, image/jpeg">
