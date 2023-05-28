@@ -1,0 +1,1 @@
+import{S as e,i as s,s as n}from"../chunks/index.95fb81be.js";import{g as r}from"../chunks/navigation.4f9c0d5b.js";import{c as a}from"../chunks/camperpins-service.63ffbdb3.js";function i(o){return a.logout(),r("/"),[]}class l extends e{constructor(t){super(),s(this,t,i,null,n,{})}}export{l as component};

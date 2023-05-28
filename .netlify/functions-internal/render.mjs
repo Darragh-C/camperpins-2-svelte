@@ -6,7 +6,7 @@ export const handler = init({
 	assets: new Set([]),
 	mimeTypes: {},
 	_: {
-		client: {"start":"_app/immutable/entry/start.255fbe4c.js","app":"_app/immutable/entry/app.66d3aadd.js","imports":["_app/immutable/entry/start.255fbe4c.js","_app/immutable/chunks/index.95fb81be.js","_app/immutable/chunks/singletons.0fda5a15.js","_app/immutable/chunks/index.df179d79.js","_app/immutable/chunks/paths.e2c154a9.js","_app/immutable/entry/app.66d3aadd.js","_app/immutable/chunks/index.95fb81be.js"],"stylesheets":[],"fonts":[]},
+		client: {"start":"_app/immutable/entry/start.8ebb5960.js","app":"_app/immutable/entry/app.314e2e6d.js","imports":["_app/immutable/entry/start.8ebb5960.js","_app/immutable/chunks/index.95fb81be.js","_app/immutable/chunks/singletons.128ec165.js","_app/immutable/chunks/index.df179d79.js","_app/immutable/chunks/paths.db5f8356.js","_app/immutable/entry/app.314e2e6d.js","_app/immutable/chunks/index.95fb81be.js"],"stylesheets":[],"fonts":[]},
 		nodes: [
 			() => import('../server/nodes/0.js'),
 			() => import('../server/nodes/1.js'),
