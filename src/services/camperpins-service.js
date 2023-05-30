@@ -2,8 +2,12 @@
 
 import axios from "axios";
 import { user } from "../stores";
+import bcrypt from "bcryptjs";
+
+const salt = await bcrypt.genSalt(10);
 
 export const camperpinsService = {
+ 
     baseUrl: "https://camperpins-hapi-1.onrender.com",
 
     async login(email, password) {
@@ -42,6 +46,10 @@ export const camperpinsService = {
                 email: email,
                 password: password
             };
+            const hash = await bcrypt.hashSync(userDetails.password, salt);
+            console.log('Hashed password:', hash);
+
+            userDetails.password = hash;
             await axios.post(this.baseUrl + "/api/users", userDetails);
             return true;
         } catch (error) {
