@@ -4,7 +4,7 @@ import axios from "axios";
 import { user } from "../stores";
 import bcrypt from "bcryptjs";
 
-const salt = await bcrypt.genSalt(10);
+
 
 export const camperpinsService = {
  
@@ -40,6 +40,7 @@ export const camperpinsService = {
 
     async signup(firstName, lastName, email, password) {
         try {
+            const salt = await bcrypt.genSalt(10);
             const userDetails = {
                 firstName: firstName,
                 lastName: lastName,
