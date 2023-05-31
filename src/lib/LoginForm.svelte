@@ -18,7 +18,7 @@
     console.log(`attemting to log in email: ${sanitizedEmail} with password: ${sanitizedPassword}`);
     let success = await camperpinsService.login(sanitizedEmail, sanitizedPassword);
     if (success) {
-      goto('/dashboard');
+      goto('/map');
     } else {
       email = '';
       password = '';

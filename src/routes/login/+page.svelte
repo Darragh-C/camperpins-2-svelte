@@ -1,5 +1,5 @@
 <script>
-  import van2 from "/src/assets/epic-van.jpg"
+  import van2 from "/src/static/epic-van.jpg"
   import TitleBar from '$lib/TitleBar.svelte';
   import LoginForm from '$lib/LoginForm.svelte';
   import WelcomeNavigator from '$lib/WelcomeNavigator.svelte';

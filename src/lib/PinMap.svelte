@@ -1,5 +1,5 @@
 <script>
-  import "leaflet/dist/leaflet.css";
+  //import "../static/leaflet.css";
   import { LeafletMap } from "../services/leaflet-map";
   import { onMount } from "svelte";
   import { camperpinsService } from "../services/camperpins-service";
@@ -7,7 +7,7 @@
   import { user, latestLatLong, lastPin } from "../stores.js";
   import { onDestroy } from "svelte";
   import { goto } from "$app/navigation";
-  import * as L from "leaflet";
+  //import * as L from "leaflet";
   
   //let layerGroupName = '';
   let layerGroupNames = [];

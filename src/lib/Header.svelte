@@ -4,10 +4,10 @@
 </script>
 
 <div class="columns is-vcentered">
-  <div class="column is-half">
+  <div class="column is-two-thirds">
       <TitleBar title={'Camperpins Inc.'} subTitle={'Sign up or Log in'} />
   </div>
-  <div class="column is-half">
+  <div class="column is-one-third">
       <slot />
   </div>
 </div>

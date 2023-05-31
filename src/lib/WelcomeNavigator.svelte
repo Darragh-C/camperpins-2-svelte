@@ -3,6 +3,6 @@
     <i class="fas fa-user-cog fa-3x" style="color:rgb(63, 160, 155)"></i>
   </a>
   <a href="/login" class="column">
-    <i class="fas fa-user-edit fa-3x" style="color:green" title="Log in"></i>
+    <i class="fas fa-user-edit fa-3x" style="color:turquoise" title="Log in"></i>
   </a>
 </div>

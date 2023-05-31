@@ -4,7 +4,7 @@
   import PinsByCounty from "$lib/PinsByCounty.svelte";
   import CampSpotChart from "$lib/CampSpotChart.svelte";
   import FreePaidChart from "$lib/FreePaidChart.svelte";
-  import van2 from "/src/assets/epic-van.jpg"
+  import van2 from "/src/static/epic-van.jpg"
 </script>
 
 <div class="columns is-vcentered">
